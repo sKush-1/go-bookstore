@@ -7,8 +7,8 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/sKush-1/bookstore/pkg/models"
-	"github.com/sKush-1/bookstore/pkg/utils"
+	"github.com/sKush-1/go-bookstore/pkg/models"
+	"github.com/sKush-1/go-bookstore/pkg/utils"
 )
 
 var NewBook models.Book
@@ -16,7 +16,7 @@ var NewBook models.Book
 func GetBook(w http.ResponseWriter, r *http.Request) {
 	newBooks := models.GetAllBooks()
 	res, _ := json.Marshal(newBooks)
-	w.Header().Set("Content-Type,pkglication/json")
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
@@ -43,7 +43,7 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 	utils.ParseBody(r, CreateBook)
 	b := CreateBook.CreateBook()
 	res, _ := json.Marshal(b)
-	w.Header().Set("Content-Type", "pkglication/json")
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(res)
 
 }
@@ -57,9 +57,9 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("error while parsing")
 	}
 
-	bookDetails, _ := models.DeleteBook(ID)
+	bookDetails := models.DeleteBook(ID)
 	res, _ := json.Marshal(bookDetails)
-	w.Header().Set("Content-Type", "pkglication/json")
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 
@@ -90,7 +90,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 
 	db.Save(bookDetails)
 	res, _ := json.Marshal(bookDetails)
-	w.Header().Set("Content-Type", "pkglication/json")
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 

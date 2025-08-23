@@ -1,25 +1,22 @@
 package models
 
 import (
-	"github/jinzhu/gorm"
-
-	"github.com/go-bookstore/pkg/config"
 	"github.com/jinzhu/gorm"
-	"github.com/sKush-1/bookstore/pkg/config"
+	"github.com/sKush-1/go-bookstore/pkg/config"
 )
 
 var db *gorm.DB
 
 type Book struct {
-	gorm.model
-	Name        string `gorm:""json:"name"`
+	gorm.Model
+	Name        string `gorm:"" json:"name"`
 	Author      string `json:"author"`
 	Publication string `json:"publication"`
 }
 
 func init() {
 	config.Connect()
-	db = config.getDB
+	db = config.GetDB()
 	db.AutoMigrate(&Book{})
 }
 
@@ -37,12 +34,12 @@ func GetAllBooks() []Book {
 
 func GetBookById(Id int64) (*Book, *gorm.DB) {
 	var getBook Book
-	db := db.where("ID=?", Id).Find(&getBook)
+	db := db.Where("ID=?", Id).Find(&getBook)
 	return &getBook, db
 }
 
 func DeleteBook(Id int64) Book {
 	var book Book
-	db.where("ID=?", Id).Delete(book)
+	db.Where("ID=?", Id).Delete(book)
 	return book
 }
